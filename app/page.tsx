@@ -5,7 +5,7 @@ import { Logo } from "@/components/brand/Logo"
 
 export default function Home() {
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black flex items-center justify-center">
+    <div className="relative w-full h-svw overflow-hidden bg-black flex items-center justify-center">
       <motion.div
         className="relative w-full max-w-md mx-auto"
         initial={{ opacity: 0 }}

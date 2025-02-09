@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: "Studio Starum is een no-code agency gevestigd in Alphen aan den Rijn. Neem vandaag nog contact op en laten we kijken hoe we jouw bedrijf tot een nieuw uiterste kunnen tillen!",
 };
 
+<meta name="apple-mobile-web-app-title" content="Studio Starum" />
+
 export default function RootLayout({
   children,
 }: Readonly<{
