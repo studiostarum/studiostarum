@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge"
 import { Logo } from "@/components/brand/Logo"
 import { CTASection } from "@/components/sections/cta-section"
 import { PricingCard } from "@/components/cards/pricing-card"
-import { ServicesSection } from "@/components/sections/services-section"
+import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 // Define pricing plans as objects
 const pricingPlans = [
@@ -67,7 +68,7 @@ export default function Home() {
   return (
     <div className="w-full min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="w-full min-h-screen flex items-center justify-center">
+      <section className="w-full h-[calc(100vh-4rem)] flex items-center justify-center">
         <div className="container max-w-7xl mx-auto px-4">
           <motion.div
             className="text-center space-y-6"
@@ -78,7 +79,7 @@ export default function Home() {
             <div className="mx-auto w-24 h-24">
               <Logo />
             </div>
-            <h1 className="text-5xl font-bold">
+            <h1>
               Verhoog de effectiviteit van jouw bureau
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -96,14 +97,45 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Services Section */}
+      <section className={cn("py-20 bg-background")}>
+        <div className="container max-w-7xl mx-auto px-4">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className={cn(
+                "flex flex-col items-center gap-12 py-12 min-h-screen",
+                index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+              )}
+            >
+              <div className="flex-1">
+                <div className="w-full overflow-hidden rounded-lg">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    width={500}
+                    height={500}
+                    className="object-cover w-full h-auto"
+                  />
+                </div>
+              </div>
+              <div className="flex-1 space-y-4">
+                <h3>{service.title}</h3>
+                <p className="text-muted-foreground">{service.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Pricing Section */}
-      <section className="py-20 bg-card">
+      <section className="py-20 bg-foreground text-background">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 text-primary border-primary">
+            <Badge variant="outlineSecondary" className="mb-4">
               Abonnementen
             </Badge>
-            <h2 className="text-4xl font-bold mb-4">
+            <h2 className="mb-4">
               Wat past bij jouw situatie?
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -124,9 +156,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Services Section */}
-      <ServicesSection services={services} />
 
       {/* CTA Section */}
       <CTASection

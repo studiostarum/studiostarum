@@ -38,7 +38,7 @@ export const PricingCard = ({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="text-4xl font-bold mb-4">
+        <div className="text-4xl font-semibold mb-4">
           {price}
         </div>
         <ul className="space-y-3 text-muted-foreground">
