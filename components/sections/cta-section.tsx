@@ -28,17 +28,17 @@ export const CTASection = ({
 
   return (
     <section className={cn(
-      "py-20",
+      "py-32",
       variantClasses[variant],
       className
     )}>
       <div className="container max-w-4xl mx-auto px-4 text-center">
-        <h2 className="text-4xl font-bold mb-6">
+        <h2 className="text-7xl mb-6">
           {title}
         </h2>
         <p className={cn(
           "mb-8",
-          variant === "default" ? "text-muted-foreground" : "text-opacity-80"
+          variant === "default" ? "text-foreground" : "text-background/60"
         )}>
           {description}
         </p>
@@ -46,7 +46,7 @@ export const CTASection = ({
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
             <Input
               type="email"
-              placeholder="Enter your email"
+              placeholder="naam@email.com"
               className={cn(
                 "flex-1",
                 variant !== "default" && "bg-background/10 backdrop-blur-sm"
@@ -56,10 +56,13 @@ export const CTASection = ({
               variant={variant === "default" ? "default" : "secondary"}
               className="w-full sm:w-auto"
             >
-              Get Started
+              Vraag een offerte aan
             </Button>
           </div>
         )}
+        <p className="text-muted-foreground text-sm mt-3">
+          We nemen binnen 24 uur contact met je op.
+        </p>
       </div>
     </section>
   )

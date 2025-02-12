@@ -8,6 +8,7 @@ import { CTASection } from "@/components/sections/cta-section"
 import { PricingCard } from "@/components/cards/pricing-card"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
+import { useState } from "react"
 
 // Define pricing plans as objects
 const pricingPlans = [
@@ -65,8 +66,10 @@ const services = [
 ]
 
 export default function Home() {
+  const [activeIndex, setActiveIndex] = useState(0)
+
   return (
-    <div className="w-full min-h-screen bg-background text-foreground">
+    <div className="w-full min-h-screen">
       {/* Hero Section */}
       <section className="w-full h-[calc(100vh-4rem)] flex items-center justify-center">
         <div className="container max-w-7xl mx-auto px-4">
@@ -96,40 +99,58 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
       {/* Services Section */}
-      <section className={cn("py-20 bg-background")}>
+      <section className={cn("py-12 bg-foreground text-background")}>
         <div className="container max-w-7xl mx-auto px-4">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              className={cn(
-                "flex flex-col items-center gap-12 py-12 min-h-screen",
-                index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              )}
-            >
-              <div className="flex-1">
-                <div className="w-full overflow-hidden rounded-lg">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    width={500}
-                    height={500}
-                    className="object-cover w-full h-auto"
-                  />
-                </div>
-              </div>
-              <div className="flex-1 space-y-4">
-                <h3>{service.title}</h3>
-                <p className="text-muted-foreground">{service.description}</p>
-              </div>
-            </div>
-          ))}
+          <div className="relative min-h-[200vh]">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                className={cn(
+                  "sticky top-0 h-[80vh] flex flex-col items-center gap-8 bg-foreground",
+                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                )}
+                initial={{ y: 0 }}
+                whileInView={{ y: 0 }}
+                onViewportEnter={() => setActiveIndex(index)}
+                onViewportLeave={(entry) => {
+                  if ((entry?.boundingClientRect?.top ?? 0) > 0) {
+                    setActiveIndex(index - 1)
+                  }
+                }}
+                viewport={{ amount: 0.1, margin: "0px 0px -100px 0px" }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+              >
+                <motion.div
+                  className="w-full h-full flex flex-row items-center gap-8"
+                  animate={{
+                    scale: index < activeIndex ? 0.9 : 1,
+                    filter: index < activeIndex ? "blur(4px)" : "blur(0px)"
+                  }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                >
+                  <div className="flex-1 w-full aspect-square overflow-hidden rounded-lg">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      width={500}
+                      height={500}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                  <div className="flex-1 space-y-4">
+                    <h3>{service.title}</h3>
+                    <p className="text-muted-foreground">{service.description}</p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 bg-foreground text-background">
+      <section className="py-20 bg-background text-foreground">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outlineSecondary" className="mb-4">
@@ -160,7 +181,7 @@ export default function Home() {
       {/* CTA Section */}
       <CTASection
         title="Klaar voor de start?"
-        description="Laat ons weten hoe we je kunnen helpen om betere oplossingen te leveren aan je klanten."
+        description="Vraag geheel vrijblijvend een offerte aan, en we nemen binnen 24 uur contact met je op."
         variant="primary"
       />
     </div>
